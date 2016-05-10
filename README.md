@@ -34,3 +34,14 @@ PPPoE/S与Radius/S间：由Radius协议完成
 客户机与PPPoE/S间：由LCP完成
 可以在任何时候终止链路，链路的正常终止由LCP分组完成，一个NCP的关闭不一定引起链路的关闭。
 
+##RADIUS协议与RSA模型的运行
+RADIUS (Remote Authentication Dial In User Service) 拨号用户远程认证服务，是一种通用的、广泛使用的实现AAA功能的协议，对接入用户提供认证授权和记账功能，且支持对漫游用户的接入控制，作用于NAS(这里就是PPPoE服务器)与RADIUS服务器之间，但并不直接定义用户与NAS之间的前台认证协议，可以与多种前台协议协同工作。
+###交互过程：
+####	用户：将用户名和口令信息发到PPPoE服务器
+####	PPPoE服务器：将用户认证信息转发给RADIUS服务器
+####	RADIUS服务器：发送质询值Challenge
+####	PPPoE服务器：将质询值Challenge转发给用户
+####	用户：将用户名和由计算得到的质询响应值发给PPPoE服务器
+####	PPPoE服务器： 将用户名和质询响应值转发给RADIUS服务器
+####	RADIUS服务器：验证用户的合法性并予以适当授权，发送Access-Accept或Access-Reject
+####	PPPoE服务器：接受后台授权，控制用户接入
